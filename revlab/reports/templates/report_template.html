@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevLab Analysis Report - {{ summary.filename }}</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --panel-bg: #282a36;
+            --brand-color: #da7756;
+            --cyan-color: #4cb9e7;
+            --green-color: #4ebe96;
+            --red-color: #e06c75;
+            --text-color: #f8f8f2;
+            --dim-text: #8a8f9e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 30px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            border: 2px solid var(--brand-color);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--panel-bg);
+            margin-bottom: 25px;
+        }
+        .header h1 { margin: 0; color: var(--brand-color); display: flex; align-items: center; gap: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card {
+            background-color: var(--panel-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--cyan-color);
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        .badge-danger { background-color: var(--red-color); color: #fff; }
+        .badge-success { background-color: var(--green-color); color: #1e1e2e; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #44475a; }
+        th { color: var(--cyan-color); }
+        code { font-family: monospace; background: #111; padding: 2px 6px; border-radius: 4px; color: var(--cyan-color); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ REV LAB Report: {{ summary.filename }}</h1>
+            <p style="color: var(--dim-text); margin-top: 8px;">Static Binary Analysis Report</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Binary Overview</h3>
+                <p><strong>Format:</strong> <code>{{ summary.format }}</code></p>
+                <p><strong>Architecture:</strong> <code>{{ summary.architecture }}</code></p>
+                <p><strong>Entry Point:</strong> <code>{{ summary.entry_point }}</code></p>
+                <p><strong>Compiler:</strong> {{ summary.compiler }}</p>
+                <p><strong>Packer:</strong> 
+                    {% if summary.is_packed %}
+                    <span class="badge badge-danger">PACKED ({{ summary.packer }})</span>
+                    {% else %}
+                    <span class="badge badge-success">UNPACKED</span>
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Cryptographic Hashes</h3>
+                <p><strong>MD5:</strong> <code>{{ summary.hashes.md5 }}</code></p>
+                <p><strong>SHA-1:</strong> <code>{{ summary.hashes.sha1 }}</code></p>
+                <p><strong>SHA-256:</strong> <code>{{ summary.hashes.sha256 }}</code></p>
+                <p><strong>ImpHash:</strong> <code>{{ summary.hashes.imphash }}</code></p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h3>Analysis Metrics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Shannon Entropy</td><td><code>{{ summary.entropy }} / 8.0</code></td></tr>
+                    <tr><td>Sections Count</td><td>{{ summary.sections_count }}</td></tr>
+                    <tr><td>Total Imports</td><td>{{ summary.imports_count }}</td></tr>
+                    <tr><td>Suspicious APIs</td><td><strong style="color: var(--red-color);">{{ summary.suspicious_imports_count }}</strong></td></tr>
+                    <tr><td>Extracted Strings</td><td>{{ summary.strings_count }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

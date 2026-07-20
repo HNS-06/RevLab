@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "revlab"
+version = "1.0.0"
+description = "RevLab - Static Binary Analysis Toolkit with Claude Code Inspired Aesthetics"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "RevLab Team" }
+]
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pefile>=2023.2.7",
+    "pyelftools>=0.29",
+    "lief>=0.13.0",
+    "networkx>=3.0",
+    "jinja2>=3.1.0",
+    "textual>=0.40.0"
+]
+
+[project.scripts]
+revlab = "revlab.cli.main:app"
+rl = "revlab.cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]

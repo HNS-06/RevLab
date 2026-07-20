@@ -1,0 +1,34 @@
+# Python Bytecode & Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+
+# Build & Package artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# SQLite Database & History
+*.db
+.revlab.db
+
+# Generated Sample Reports & HTML graphs
+revlab_report_*
+revlab_cfg_*
+tests/samples/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
